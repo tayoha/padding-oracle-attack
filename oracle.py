@@ -18,7 +18,10 @@ def pad(message):
 
 def unpad(message):
     n = message[-1]
+    print(binascii.hexlify(message))
     if n < 1 or n > AES.block_size or message[-n:] != bytes([n]*n):
+        print("invalid padding")
+        print()
         raise Exception('invalid_padding')
     return message[:-n]
 
@@ -45,7 +48,9 @@ def hmac(message, mac_key):
 def verify(message, mac, mac_key):
     if mac != hmac(message, mac_key):
         # exaggerate time difference between checking padding and verifying mac
-        time.sleep(0.02)
+        time.sleep(0.1)
+        print("invalid mac")
+        print()
         raise Exception('invalid_mac')
 
 def macThenEncrypt(message, key, mac_key):

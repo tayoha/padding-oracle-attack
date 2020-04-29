@@ -44,8 +44,9 @@ def get_status(ciphertext_test, sock):
     second = datetime.datetime.now()
     time_elapsed = (second - first).total_seconds()
     if response == "error":
-        if float(time_elapsed) > 0.02:
+        if float(time_elapsed) > 0.1:
             # invalid mac
+            #print("time elapsed: ", str(time_elapsed))
             return "invalid mac"
         else:
             # invalid padding
@@ -126,6 +127,10 @@ def main():
             if status == "invalid mac":
                 s_val = val ^ (pad_num)
                 s_values[index_to_alter] = s_val
+                """print("pad_num: ", str(pad_num))
+                print("ciphertext value: ", str(val))
+                print("resulting s value: ", str(s_val))
+                print("s values: ", s_values)"""
                 break
             val += 1
         index_to_alter -= 1
